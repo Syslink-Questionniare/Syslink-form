@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SYSLINK · แบบสำรวจความต้องการระบบ Smart Building</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>SYSLINK · Smart Building Requirements Survey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,19 +15,20 @@
   --brand:#1E6FE0; --brand-press:#1559B8; --brand-tint:#E9F1FD;
   --ok:#0E9E78; --ok-tint:#E1F4EE;
   --amber:#C9821B; --danger:#D24545; --danger-tint:#FBEBEB;
-  --font:'IBM Plex Sans Thai','IBM Plex Sans',system-ui,sans-serif;
+  --font:'IBM Plex Sans Thai','IBM Plex Sans',system-ui,-apple-system,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
   --r:14px; --r-sm:10px;
   --shadow:0 1px 2px rgba(14,35,54,.05),0 8px 28px rgba(14,35,54,.06);
 }
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{margin:0;padding:0}
 body{
   background:
     radial-gradient(1200px 600px at 100% -10%, #F2F6FA 0%, transparent 60%),
     var(--bg);
   color:var(--ink); font-family:var(--font); font-size:15px; line-height:1.5;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent;
 }
 .wrap{max-width:1160px;margin:0 auto;padding:28px 20px 64px}
 
@@ -37,20 +38,19 @@ body{
 .logo{
   width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
   background:linear-gradient(150deg,var(--brand),#3F8BF0);color:#fff;
-  box-shadow:0 6px 16px rgba(30,111,224,.35);
+  box-shadow:0 6px 16px rgba(30,111,224,.35); flex:0 0 auto;
 }
 .logo svg{width:22px;height:22px}
 .brand b{font-size:19px;letter-spacing:.5px;font-weight:700}
 .brand .tag{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-.mast-meta{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;letter-spacing:.5px}
+.mast-meta{font-size:11.5px;color:var(--muted);text-align:right;letter-spacing:.4px;line-height:1.45}
+.mast-meta b{color:var(--ink-soft);font-weight:600;letter-spacing:.6px}
 
 /* Layout */
 .shell{display:grid;grid-template-columns:248px 1fr;gap:22px;align-items:start}
-@media(max-width:860px){.shell{grid-template-columns:1fr}}
 
 /* Rail */
 .rail{position:sticky;top:20px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 16px}
-@media(max-width:860px){.rail{position:static}}
 .rail h4{margin:0 0 14px;font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);font-weight:600}
 .rail ol{list-style:none;margin:0;padding:0;position:relative}
 .rail ol::before{content:"";position:absolute;left:13px;top:8px;bottom:8px;width:2px;background:var(--line);border-radius:2px}
@@ -64,6 +64,9 @@ body{
 .step.active .lbl .t{color:var(--ink);font-weight:600}
 .step.done .dot{background:var(--brand);border-color:var(--brand);color:#fff}
 .step:hover .lbl .t{color:var(--ink)}
+.rail-now{display:none;margin-bottom:12px}
+.rail-now .ns{font-family:var(--mono);font-size:11px;color:var(--brand);font-weight:600;letter-spacing:1px}
+.rail-now .nt{font-size:16px;font-weight:700;margin-top:2px;line-height:1.25}
 .progress{margin-top:16px}
 .progress .bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden}
 .progress .fill{height:100%;background:linear-gradient(90deg,var(--brand),#54A0FF);width:0;transition:width .4s ease}
@@ -76,46 +79,46 @@ body{
 .eyebrow::before{content:"";width:18px;height:2px;background:var(--brand);display:inline-block}
 .card-head h2{margin:9px 0 4px;font-size:22px;font-weight:700;letter-spacing:-.2px}
 .card-head p{margin:0;color:var(--ink-soft);font-size:14px}
-.card-body{padding:24px 26px}
 .stage-anim{animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.stage-anim{animation:none}.progress .fill{transition:none}}
+.card-body{padding:24px 26px}
 
 /* Fields */
 .grid{display:grid;gap:16px}
 .g2{grid-template-columns:1fr 1fr}
 .g3{grid-template-columns:1fr 1fr 1fr}
-@media(max-width:680px){.g2,.g3{grid-template-columns:1fr}}
 .field label{display:block;margin-bottom:7px}
-.field .lab{font-size:13.5px;font-weight:600;color:var(--ink)}
+.field .lab{font-size:14px;font-weight:600;color:var(--ink)}
 .field .lab .req{color:var(--danger);margin-left:3px}
-.field .sub{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.4px;font-weight:400}
+.field .sub{font-size:12.5px;color:var(--muted);font-weight:400}
 input[type=text],input[type=tel],input[type=email],input[type=number],textarea,select{
-  width:100%;padding:11px 13px;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);
-  font-family:var(--font);font-size:14.5px;color:var(--ink);background:var(--panel-2);transition:.15s;outline:none}
-textarea{resize:vertical;min-height:84px}
+  width:100%;padding:12px 13px;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);
+  font-family:var(--font);font-size:16px;color:var(--ink);background:var(--panel-2);transition:border .15s,box-shadow .15s,background .15s;
+  outline:none;-webkit-appearance:none;appearance:none}
+textarea{resize:vertical;min-height:88px}
 input:focus,textarea:focus,select:focus{border-color:var(--brand);background:#fff;box-shadow:0 0 0 4px var(--brand-tint)}
 input.err{border-color:var(--danger);background:var(--danger-tint)}
 
 /* chips */
 .chips{display:flex;flex-wrap:wrap;gap:9px}
-.chip{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1.5px solid var(--line-strong);
-  border-radius:999px;background:var(--panel-2);cursor:pointer;font-size:14px;color:var(--ink-soft);transition:.15s;user-select:none}
-.chip .en{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--line-strong);
+  border-radius:999px;background:var(--panel-2);cursor:pointer;font-size:14px;color:var(--ink-soft);transition:.15s;user-select:none;min-height:42px}
+.chip .en{font-size:12px;color:var(--muted)}
 .chip:hover{border-color:var(--brand);color:var(--ink)}
 .chip.on{background:var(--brand-tint);border-color:var(--brand);color:var(--brand-press);font-weight:600}
 .chip.on .en{color:var(--brand)}
-.chip .tick{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--line-strong);display:grid;place-items:center;font-size:9px}
+.chip .tick{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--line-strong);display:grid;place-items:center;font-size:9px;flex:0 0 auto}
 .chip.on .tick{background:var(--brand);border-color:var(--brand);color:#fff}
 
 /* selectable system cards */
 .groupblk{margin-bottom:26px}
 .groupblk:last-child{margin-bottom:0}
 .group-h{display:flex;align-items:center;gap:10px;margin-bottom:13px}
-.group-h .code{font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;background:var(--ink);padding:3px 9px;border-radius:6px;letter-spacing:1px}
+.group-h .code{font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;background:var(--ink);padding:3px 9px;border-radius:6px;letter-spacing:1px;flex:0 0 auto}
 .group-h .nm{font-weight:700;font-size:16px}
-.group-h .nm small{color:var(--muted);font-weight:500;font-family:var(--mono);font-size:11px;margin-left:6px}
-.syscards{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:12px}
+.group-h .nm small{color:var(--muted);font-weight:500;font-size:12px;margin-left:6px}
+.syscards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
 .syscard{position:relative;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);padding:15px 15px 15px 17px;
   cursor:pointer;background:var(--panel-2);transition:.18s;overflow:hidden}
 .syscard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:transparent;transition:.18s}
@@ -129,40 +132,41 @@ input.err{border-color:var(--danger);background:var(--danger-tint)}
 .syscard .box{width:22px;height:22px;border-radius:6px;border:2px solid var(--line-strong);display:grid;place-items:center;color:#fff;transition:.18s}
 .syscard.on .box{background:var(--brand);border-color:var(--brand)}
 .syscard .nm{font-weight:600;font-size:14.5px;line-height:1.3}
-.syscard .nm small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);font-weight:400;margin-top:2px}
+.syscard .nm small{display:block;font-size:11.5px;color:var(--muted);font-weight:400;margin-top:2px}
 
-/* detail block per selected system */
+/* detail block */
 .detail{border:1px solid var(--line);border-radius:var(--r-sm);margin-bottom:18px;overflow:hidden}
 .detail:last-child{margin-bottom:0}
 .detail-h{display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--panel-2);border-bottom:1px solid var(--line)}
-.detail-h .ico{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center}
+.detail-h .ico{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center;flex:0 0 auto}
 .detail-h .ico svg{width:17px;height:17px}
 .detail-h .t{font-weight:700;font-size:15px}
 .detail-h .c{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:auto;letter-spacing:1px}
 .detail-body{padding:16px}
 
-/* matrix (existing systems) */
+/* matrix */
 .matrix{border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
-.mrow{display:grid;grid-template-columns:1.3fr 1.4fr 1fr;gap:0;border-bottom:1px solid var(--line)}
+.mrow{display:grid;grid-template-columns:1.3fr 1.4fr 1.1fr;gap:0;border-bottom:1px solid var(--line)}
 .mrow:last-child{border-bottom:none}
 .mrow.head{background:var(--ink);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.5px;text-transform:uppercase}
 .mcell{padding:11px 13px;display:flex;align-items:center;border-right:1px solid var(--line)}
 .mrow.head .mcell{border-right-color:rgba(255,255,255,.12)}
 .mcell:last-child{border-right:none}
 .mcell .nm{font-weight:600;font-size:13.5px}
-.mcell input{padding:8px 10px;font-size:13.5px}
-.mini-chips{display:flex;gap:6px}
-.mini{padding:5px 11px;border:1.4px solid var(--line-strong);border-radius:999px;font-size:12.5px;cursor:pointer;background:#fff;color:var(--ink-soft);transition:.15s}
+.mcell .nm .th{display:block;font-weight:400;font-size:11.5px;color:var(--muted);margin-top:1px}
+.mcell input{padding:9px 10px;font-size:14px}
+.mini-chips{display:flex;gap:6px;flex-wrap:wrap}
+.mini{padding:7px 11px;border:1.4px solid var(--line-strong);border-radius:999px;font-size:12.5px;cursor:pointer;background:#fff;color:var(--ink-soft);transition:.15s}
 .mini.on{background:var(--ok-tint);border-color:var(--ok);color:#0a6e54;font-weight:600}
+.mini.blue.on{background:var(--brand-tint);border-color:var(--brand);color:var(--brand-press)}
 .mini.no.on{background:var(--danger-tint);border-color:var(--danger);color:#a52f2f}
-@media(max-width:680px){.mrow{grid-template-columns:1fr}.mcell{border-right:none;border-bottom:1px solid var(--line)}}
 
 /* review */
 .review-grp{margin-bottom:20px}
 .review-grp h3{font-size:13px;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--brand);margin:0 0 10px;font-weight:600}
 .rrow{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
 .rrow .k{flex:0 0 42%;color:var(--ink-soft)}
-.rrow .v{font-weight:600;color:var(--ink)}
+.rrow .v{font-weight:600;color:var(--ink);min-width:0;word-break:break-word}
 .rrow .v.empty{font-weight:400;color:var(--muted);font-style:italic}
 .ticket{background:var(--ink);color:#fff;border-radius:var(--r-sm);padding:18px 20px;margin-bottom:22px;position:relative;overflow:hidden}
 .ticket::after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border:14px solid rgba(255,255,255,.05);border-radius:50%}
@@ -170,10 +174,10 @@ input.err{border-color:var(--danger);background:var(--danger-tint)}
 .ticket .big{font-size:20px;font-weight:700;margin:5px 0}
 .ticket .meta{font-family:var(--mono);font-size:12px;color:#A9C4E5}
 
-/* footer / nav */
-.actions{display:flex;align-items:center;gap:12px;padding:18px 26px;border-top:1px solid var(--line);background:var(--panel-2)}
+/* nav */
+.actions{display:flex;align-items:center;gap:12px;padding:18px 26px;border-top:1px solid var(--line);background:var(--panel-2);flex-wrap:wrap}
 .spacer{flex:1}
-.btn{padding:12px 22px;border-radius:var(--r-sm);font-family:var(--font);font-size:14.5px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.btn{padding:13px 22px;border-radius:var(--r-sm);font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:.15s;display:inline-flex;align-items:center;gap:8px;min-height:48px}
 .btn:focus-visible{outline:3px solid var(--brand-tint);outline-offset:2px}
 .btn.ghost{background:#fff;border-color:var(--line-strong);color:var(--ink-soft)}
 .btn.ghost:hover{border-color:var(--brand);color:var(--brand)}
@@ -183,21 +187,51 @@ input.err{border-color:var(--danger);background:var(--danger-tint)}
 .btn.ok{background:var(--ok);color:#fff}
 .note{font-size:12.5px;color:var(--muted);font-family:var(--mono)}
 
-/* toast / banners */
+/* banners */
 .banner{padding:12px 15px;border-radius:var(--r-sm);font-size:14px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start}
 .banner.warn{background:#FFF6E6;border:1px solid #F0D699;color:#8A5E12}
 .banner.ok{background:var(--ok-tint);border:1px solid #9CD9C5;color:#0a6e54}
 .banner.err{background:var(--danger-tint);border:1px solid #EBB4B4;color:#a52f2f}
 .banner b{font-weight:700}
+.banner code{font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.06);padding:1px 5px;border-radius:4px}
 
 .hidden{display:none!important}
-.donewrap{text-align:center;padding:44px 26px}
+.donewrap{text-align:center;padding:44px 20px}
 .donewrap .circle{width:78px;height:78px;border-radius:50%;background:var(--ok-tint);color:var(--ok);display:grid;place-items:center;margin:0 auto 18px}
 .donewrap .circle svg{width:38px;height:38px}
 .donewrap h2{margin:0 0 8px;font-size:24px}
-.donewrap p{color:var(--ink-soft);max-width:440px;margin:0 auto 22px}
+.donewrap p{color:var(--ink-soft);max-width:460px;margin:0 auto 22px}
 .dl-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .foot-credit{text-align:center;margin-top:26px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.5px}
+
+/* ---------- Responsive: tablet & mobile ---------- */
+@media(max-width:860px){
+  .shell{grid-template-columns:1fr;gap:16px}
+  .rail{position:static;padding:14px 16px}
+  .rail h4,.rail ol{display:none}
+  .rail-now{display:block}
+  .g3{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .g2,.g3{grid-template-columns:1fr}
+  .mrow{grid-template-columns:1fr}
+  .mcell{border-right:none;border-bottom:1px solid var(--line)}
+  .mcell:last-child{border-bottom:none}
+}
+@media(max-width:560px){
+  .wrap{padding:18px 12px 48px}
+  .masthead{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:16px}
+  .mast-meta{text-align:left}
+  .card-head{padding:18px 16px 14px}
+  .card-head h2{font-size:19px}
+  .card-body{padding:18px 16px}
+  .actions{padding:14px 16px}
+  .actions .note{order:3;flex-basis:100%}
+  .btn{flex:1 1 auto;justify-content:center}
+  .syscards{grid-template-columns:1fr}
+  .rrow{flex-direction:column;gap:2px}
+  .rrow .k{flex-basis:auto}
+}
 </style>
 </head>
 <body>
@@ -215,22 +249,21 @@ input.err{border-color:var(--danger);background:var(--danger-tint)}
       </div>
     </div>
     <div class="mast-meta">
-      แบบสำรวจความต้องการระบบ<br>SYSTEM REQUIREMENTS SURVEY
+      <b>SYSTEM REQUIREMENTS SURVEY</b><br>แบบสำรวจความต้องการระบบ
     </div>
   </div>
 
   <div class="shell">
-    <!-- RAIL -->
     <aside class="rail">
-      <h4>ขั้นตอน / STEPS</h4>
+      <h4>STEPS / ขั้นตอน</h4>
       <ol id="rail"></ol>
+      <div class="rail-now" id="railNow"></div>
       <div class="progress">
         <div class="bar"><div class="fill" id="fill"></div></div>
         <div class="pct" id="pct">0%</div>
       </div>
     </aside>
 
-    <!-- STAGE -->
     <main class="card">
       <div class="card-head">
         <div class="eyebrow" id="eyebrow">STEP</div>
@@ -239,23 +272,23 @@ input.err{border-color:var(--danger);background:var(--danger-tint)}
       </div>
       <div class="card-body" id="stage"></div>
       <div class="actions" id="actions">
-        <button class="btn ghost" id="backBtn">← ย้อนกลับ</button>
+        <button class="btn ghost" id="backBtn">← Back</button>
         <span class="note" id="footnote"></span>
         <span class="spacer"></span>
-        <button class="btn primary" id="nextBtn">ถัดไป →</button>
+        <button class="btn primary" id="nextBtn">Next →</button>
       </div>
     </main>
   </div>
 
-  <div class="foot-credit">SYSLINK · REQUIREMENTS INTAKE · v1.0</div>
+  <div class="foot-credit">SYSLINK · REQUIREMENTS INTAKE · v1.1</div>
 </div>
 
 <script>
 /* =========================================================================
-   CONFIG — วางลิงก์ Google Apps Script Web App ที่นี่ (ดูไฟล์ Code.gs / SETUP)
+   CONFIG — paste your Google Apps Script Web App URL here (see Code.gs / SETUP)
    ========================================================================= */
 const CONFIG = {
-  webAppUrl: "https://script.google.com/macros/s/AKfycbz8PduDSSeqf-3JKijYg5bIWXxnPUlH_vPekRf-7sEy8M3CVjG3YMpe6YsQRmt_sCCV/exec",   // เช่น "https://script.google.com/macros/s/AKfy.../exec"
+  webAppUrl: "https://script.google.com/macros/s/AKfycbz8PduDSSeqf-3JKijYg5bIWXxnPUlH_vPekRf-7sEy8M3CVjG3YMpe6YsQRmt_sCCV/exec",   // e.g. "https://script.google.com/macros/s/AKfy.../exec"
   company: "SYSLINK"
 };
 
@@ -274,139 +307,130 @@ const I = {
   iptv:'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
   checkin:'<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 7h6M9 11h6M10 21h4"/>',
   ai:'<rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="10" r="1.4"/><path d="M4 16l4-3 3 2 4-4 5 4"/>',
-  robot:'<rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V4M9 4h6M9 13h.01M15 13h.01M9 19v2M15 19v2"/>',
-  doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h6"/>',
-  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
-  list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>'
+  robot:'<rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V4M9 4h6M9 13h.01M15 13h.01M9 19v2M15 19v2"/>'
 };
 function svg(p){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
 
 /* =========================================================================
-   SCHEMA — ทุกระบบ + คำถามรายละเอียด (เรียบเรียงจากเอกสาร SYSLINK + Smart Hotel)
+   SCHEMA — English primary, Thai secondary. Stored values are English.
    ========================================================================= */
-const opt = (th,en)=>({th,en});
+const opt = (en,th)=>({en,th});
 
 const GROUPS = [
-  { id:'aut', code:'AUT', th:'ระบบออโตเมชัน', en:'Smart Automation', systems:[
-    { id:'lighting', code:'A1', icon:'bulb', th:'ระบบควบคุมไฟ', en:'Smart Lighting', fields:[
-        {id:'control', t:'multi', lab:'การควบคุม', sub:'Control type', opts:[opt('เปิด-ปิด','On/Off'),opt('หรี่แสง','Dimmable')]},
-        {id:'lightType', t:'multi', lab:'ประเภทหลอดไฟ', sub:'Fixture type', opts:[opt('ดาวน์ไลท์','Downlight'),opt('แทร็กไลท์','Track'),opt('สตริปไลท์','Strip'),opt('หลอดทั่วไป','Bulb'),opt('อื่นๆ','Other')]},
-        {id:'switch', t:'select', lab:'ประเภทสวิตช์', sub:'Switch type', opts:[opt('สวิตช์โยก','Toggle'),opt('สวิตช์กด','Push')]},
-        {id:'points', t:'number', lab:'จำนวนจุด (โดยประมาณ)', sub:'No. of points'}
+  { id:'aut', code:'AUT', en:'Smart Automation', th:'ระบบออโตเมชัน', systems:[
+    { id:'lighting', code:'A1', icon:'bulb', en:'Smart Lighting', th:'ระบบควบคุมไฟ', fields:[
+        {id:'control', t:'multi', lab:'Control', sub:'การควบคุม', opts:[opt('On/Off','เปิด-ปิด'),opt('Dimmable','หรี่แสง')]},
+        {id:'lightType', t:'multi', lab:'Fixture type', sub:'ประเภทหลอดไฟ', opts:[opt('Downlight','ดาวน์ไลท์'),opt('Track','แทร็กไลท์'),opt('Strip','สตริปไลท์'),opt('Bulb','หลอดทั่วไป'),opt('Other','อื่นๆ')]},
+        {id:'switch', t:'select', lab:'Switch type', sub:'ประเภทสวิตช์', opts:[opt('Toggle','สวิตช์โยก'),opt('Push','สวิตช์กด')]},
+        {id:'points', t:'number', lab:'No. of points', sub:'จำนวนจุด (โดยประมาณ)'}
     ]},
-    { id:'climate', code:'A2', icon:'ac', th:'ระบบปรับอากาศ', en:'Air Conditioning', fields:[
-        {id:'spec', t:'text', lab:'ประเภท / สเปคแอร์', sub:'AC type / spec'},
-        {id:'brand', t:'text', lab:'ยี่ห้อ / รุ่น', sub:'Brand & model'},
-        {id:'ctrl', t:'select', lab:'รูปแบบการควบคุม', sub:'Control', opts:[opt('รีโมท','Remote'),opt('หน้าจอ Navigation','Navigation panel')]},
-        {id:'units', t:'number', lab:'จำนวนเครื่อง', sub:'No. of units'}
+    { id:'climate', code:'A2', icon:'ac', en:'Air Conditioning', th:'ระบบปรับอากาศ', fields:[
+        {id:'spec', t:'text', lab:'AC type / spec', sub:'ประเภท / สเปคแอร์'},
+        {id:'brand', t:'text', lab:'Brand & model', sub:'ยี่ห้อ / รุ่น'},
+        {id:'ctrl', t:'select', lab:'Control method', sub:'รูปแบบการควบคุม', opts:[opt('Remote','รีโมท'),opt('Navigation panel','หน้าจอ Navigation')]},
+        {id:'units', t:'number', lab:'No. of units', sub:'จำนวนเครื่อง'}
     ]},
-    { id:'curtain', code:'A3', icon:'curtain', th:'ระบบม่านอัตโนมัติ', en:'Curtain System', fields:[
-        {id:'pos', t:'text', lab:'ตำแหน่งมอเตอร์ม่าน', sub:'Motor position'},
-        {id:'motor', t:'select', lab:'ประเภทมอเตอร์', sub:'Motor type', opts:[opt('DC','DC'),opt('AC 3 สาย','AC 3-line'),opt('AC 5 สาย','AC 5-line')]},
-        {id:'ctype', t:'select', lab:'ประเภทม่าน', sub:'Curtain type', opts:[opt('ม่านม้วน','Roller'),opt('ม่านจีบ','Pleated')]},
-        {id:'sets', t:'number', lab:'จำนวนชุด', sub:'No. of sets'}
+    { id:'curtain', code:'A3', icon:'curtain', en:'Curtain System', th:'ระบบม่านอัตโนมัติ', fields:[
+        {id:'pos', t:'text', lab:'Motor position', sub:'ตำแหน่งมอเตอร์ม่าน'},
+        {id:'motor', t:'select', lab:'Motor type', sub:'ประเภทมอเตอร์', opts:[opt('DC','DC'),opt('AC 3-line','AC 3 สาย'),opt('AC 5-line','AC 5 สาย')]},
+        {id:'ctype', t:'select', lab:'Curtain type', sub:'ประเภทม่าน', opts:[opt('Roller','ม่านม้วน'),opt('Pleated','ม่านจีบ')]},
+        {id:'sets', t:'number', lab:'No. of sets', sub:'จำนวนชุด'}
     ]},
-    { id:'scene', code:'A4', icon:'scene', th:'Scene & ลำโพงอัจฉริยะ', en:'Scene & Audio', fields:[
-        {id:'scene', t:'select', lab:'Scene control', sub:'ตั้งฉากแสง/บรรยากาศ', opts:[opt('ต้องการ','Need'),opt('ไม่ต้องการ','Skip')]},
-        {id:'speaker', t:'select', lab:'Smart Speaker / เสียง', sub:'Audio', opts:[opt('ต้องการ','Need'),opt('ไม่ต้องการ','Skip')]},
-        {id:'note', t:'text', lab:'หมายเหตุ', sub:'Note'}
+    { id:'scene', code:'A4', icon:'scene', en:'Scene & Audio', th:'Scene & ลำโพงอัจฉริยะ', fields:[
+        {id:'scene', t:'select', lab:'Scene control', sub:'ตั้งฉากแสง/บรรยากาศ', opts:[opt('Need','ต้องการ'),opt('Skip','ไม่ต้องการ')]},
+        {id:'speaker', t:'select', lab:'Smart speaker / audio', sub:'ลำโพงอัจฉริยะ', opts:[opt('Need','ต้องการ'),opt('Skip','ไม่ต้องการ')]},
+        {id:'note', t:'text', lab:'Note', sub:'หมายเหตุ'}
     ]}
   ]},
 
-  { id:'sec', code:'SEC', th:'ระบบความปลอดภัย', en:'Security & Access', systems:[
-    { id:'access', code:'S1', icon:'lock', th:'ควบคุมการเข้าออก / Door Lock', en:'Access Control', fields:[
-        {id:'loc', t:'text', lab:'ตำแหน่งที่ต้องการ', sub:'Where needed'},
-        {id:'gate', t:'multi', lab:'ประเภทประตู', sub:'Gate type', opts:[opt('บานเดี่ยว','Single'),opt('บานคู่','Double'),opt('Auto-door','Auto-door'),opt('บานสไลด์','Sliding')]},
-        {id:'gmat', t:'multi', lab:'วัสดุประตู', sub:'Gate material', opts:[opt('ไม้','Wood'),opt('กระจกมีขอบ','Framed glass'),opt('กระจกเปลือย','Frameless')]},
-        {id:'mag', t:'select', lab:'ประเภท Magnetic', sub:'Lock type', opts:[opt('Electric Magnetic','EM Lock'),opt('Bolt Magnetic','Bolt Lock')]},
-        {id:'func', t:'multi', lab:'ฟังก์ชันปลดล็อก', sub:'Function', opts:[opt('Face Scan','Face'),opt('การ์ด','Card'),opt('QR Code','QR'),opt('PIN','PIN'),opt('Bluetooth','BT'),opt('มือถือ','Mobile')]},
-        {id:'spec', t:'text', lab:'ขนาด / วัสดุ / สี ของ Door Lock', sub:'Lock spec'},
-        {id:'doors', t:'number', lab:'จำนวนประตู', sub:'No. of doors'}
+  { id:'sec', code:'SEC', en:'Security & Access', th:'ระบบความปลอดภัย', systems:[
+    { id:'access', code:'S1', icon:'lock', en:'Access Control / Door Lock', th:'ควบคุมการเข้าออก', fields:[
+        {id:'loc', t:'text', lab:'Where needed', sub:'ตำแหน่งที่ต้องการ'},
+        {id:'gate', t:'multi', lab:'Gate type', sub:'ประเภทประตู', opts:[opt('Single','บานเดี่ยว'),opt('Double','บานคู่'),opt('Auto-door','Auto-door'),opt('Sliding','บานสไลด์')]},
+        {id:'gmat', t:'multi', lab:'Gate material', sub:'วัสดุประตู', opts:[opt('Wood','ไม้'),opt('Framed glass','กระจกมีขอบ'),opt('Frameless glass','กระจกเปลือย'),opt('Metal','โลหะ')]},
+        {id:'mag', t:'select', lab:'Magnetic lock', sub:'ประเภท Magnetic', opts:[opt('EM Lock','Electric Magnetic'),opt('Bolt Lock','Bolt Magnetic')]},
+        {id:'func', t:'multi', lab:'Unlock function', sub:'ฟังก์ชันปลดล็อก', opts:[opt('Face','Face Scan'),opt('Card','การ์ด'),opt('QR','QR Code'),opt('PIN','PIN'),opt('Bluetooth','Bluetooth'),opt('Mobile','มือถือ')]},
+        {id:'spec', t:'text', lab:'Lock size / material / colour', sub:'ขนาด / วัสดุ / สี Door Lock'},
+        {id:'doors', t:'number', lab:'No. of doors', sub:'จำนวนประตู'}
     ]},
-    { id:'intercom', code:'S2', icon:'intercom', th:'ระบบอินเตอร์คอม', en:'Intercom', fields:[
-        {id:'dest', t:'text', lab:'ต้องการให้โทรไปที่จุดไหน', sub:'Call destinations'},
-        {id:'deploy', t:'select', lab:'รูปแบบระบบ', sub:'Deployment', opts:[opt('On-cloud (ไม่ต้องเดินสาย)','Cloud'),opt('Local (เดินสายถึงแต่ละ Unit)','Local')]},
-        {id:'cable', t:'select', lab:'การเดินสาย', sub:'Cabling', opts:[opt('LAN (ระยะ <100ม.)','LAN'),opt('Fiber (ระยะ >100ม.)','Fiber')]},
-        {id:'fiber', t:'select', lab:'ชนิด Fiber', sub:'Fiber type', opts:[opt('Multi-Mode','MM'),opt('Single-Mode','SM'),opt('ไม่ใช้ Fiber','N/A')]},
-        {id:'server', t:'text', lab:'ตำแหน่งตู้ Server / Network', sub:'Server rack location'}
+    { id:'intercom', code:'S2', icon:'intercom', en:'Intercom', th:'ระบบอินเตอร์คอม', fields:[
+        {id:'dest', t:'text', lab:'Call destinations', sub:'ต้องการให้โทรไปที่จุดไหน'},
+        {id:'deploy', t:'select', lab:'Deployment', sub:'รูปแบบระบบ', opts:[opt('On-cloud','On-cloud (ไม่ต้องเดินสาย)'),opt('Local','Local (เดินสายถึงแต่ละ Unit)')]},
+        {id:'cable', t:'select', lab:'Cabling', sub:'การเดินสาย', opts:[opt('LAN (<100 m)','LAN (ระยะ <100ม.)'),opt('Fiber (>100 m)','Fiber (ระยะ >100ม.)')]},
+        {id:'fiber', t:'select', lab:'Fiber type', sub:'ชนิด Fiber', opts:[opt('Multi-Mode','Multi-Mode'),opt('Single-Mode','Single-Mode'),opt('No fiber','ไม่ใช้ Fiber')]},
+        {id:'server', t:'text', lab:'Server / network rack location', sub:'ตำแหน่งตู้ Server / Network'}
     ]},
-    { id:'sensor', code:'S3', icon:'shield', th:'CCTV & เซนเซอร์', en:'CCTV & Sensors', fields:[
-        {id:'dw', t:'select', lab:'เซนเซอร์ประตู/หน้าต่าง', sub:'Door/window sensor', opts:[opt('ต้องการ','Need'),opt('ไม่ต้องการ','Skip')]},
-        {id:'occ', t:'select', lab:'ตรวจจับคนในห้อง / การล้ม', sub:'Occupant/fall', opts:[opt('ต้องการ','Need'),opt('ไม่ต้องการ','Skip')]},
-        {id:'cctv', t:'text', lab:'กล้อง CCTV (รุ่น/ความละเอียด)', sub:'Camera model/res'}
+    { id:'sensor', code:'S3', icon:'shield', en:'CCTV & Sensors', th:'CCTV และเซนเซอร์', fields:[
+        {id:'dw', t:'select', lab:'Door / window sensor', sub:'เซนเซอร์ประตู/หน้าต่าง', opts:[opt('Need','ต้องการ'),opt('Skip','ไม่ต้องการ')]},
+        {id:'occ', t:'select', lab:'Occupant / fall detection', sub:'ตรวจจับคนในห้อง/การล้ม', opts:[opt('Need','ต้องการ'),opt('Skip','ไม่ต้องการ')]},
+        {id:'cctv', t:'text', lab:'CCTV camera (model / resolution)', sub:'กล้อง CCTV (รุ่น/ความละเอียด)'}
     ]},
-    { id:'smoke', code:'S4', icon:'smoke', th:'Smart Smoke Detector', en:'Smoke Detection', fields:[
-        {id:'feat', t:'multi', lab:'ฟังก์ชัน', sub:'Features', opts:[opt('แจ้งเตือนควันเกินกำหนด','Smoke alarm'),opt('แจ้งเตือนอุณหภูมิเกิน','Temp warning'),opt('เสียง + ไฟแจ้งเตือน','Audible/visual')]},
-        {id:'qty', t:'number', lab:'จำนวน', sub:'Quantity'}
+    { id:'smoke', code:'S4', icon:'smoke', en:'Smoke Detection', th:'Smart Smoke Detector', fields:[
+        {id:'feat', t:'multi', lab:'Features', sub:'ฟังก์ชัน', opts:[opt('Smoke alarm','แจ้งเตือนควันเกินกำหนด'),opt('Temp warning','แจ้งเตือนอุณหภูมิเกิน'),opt('Audible / visual alarm','เสียง + ไฟแจ้งเตือน')]},
+        {id:'qty', t:'number', lab:'Quantity', sub:'จำนวน'}
     ]}
   ]},
 
-  { id:'bms', code:'BMS', th:'ระบบบริหารอาคาร', en:'Building Mgmt (BMS/PMS)', systems:[
-    { id:'bms', code:'C1', icon:'bms', th:'BMS — Building Management', en:'BMS', fields:[
-        {id:'brand', t:'text', lab:'ยี่ห้อ BMS เดิม / ที่ต้องการ', sub:'Existing / preferred brand'},
-        {id:'complete', t:'select', lab:'ต้องการระบบครบชุด?', sub:'Complete system?', opts:[opt('ต้องการครบชุด','Yes'),opt('ไม่ / มีอยู่แล้ว','No')]},
-        {id:'meter', t:'multi', lab:'การคำนวณการใช้พลังงาน', sub:'Metering', opts:[opt('คำนวณการใช้ไฟ','Electricity'),opt('คำนวณการใช้น้ำ','Water')]}
+  { id:'bms', code:'BMS', en:'Building Management (BMS / PMS)', th:'ระบบบริหารอาคาร', systems:[
+    { id:'bms', code:'C1', icon:'bms', en:'BMS — Building Management', th:'ระบบบริหารอาคาร', fields:[
+        {id:'brand', t:'text', lab:'Existing / preferred brand', sub:'ยี่ห้อ BMS เดิม / ที่ต้องการ'},
+        {id:'complete', t:'select', lab:'Complete system?', sub:'ต้องการระบบครบชุด?', opts:[opt('Yes — complete','ต้องการครบชุด'),opt('No — existing','ไม่ / มีอยู่แล้ว')]},
+        {id:'meter', t:'multi', lab:'Energy metering', sub:'การคำนวณการใช้พลังงาน', opts:[opt('Electricity','คำนวณการใช้ไฟ'),opt('Water','คำนวณการใช้น้ำ')]}
     ]},
-    { id:'pms', code:'C2', icon:'pms', th:'PMS — Property/Hotel Mgmt', en:'PMS', fields:[
-        {id:'brand', t:'text', lab:'ยี่ห้อ PMS เดิม / ที่ต้องการ', sub:'Existing / preferred brand'},
-        {id:'complete', t:'select', lab:'ต้องการระบบครบชุด?', sub:'Complete system?', opts:[opt('ต้องการครบชุด','Yes'),opt('ไม่ / มีอยู่แล้ว','No')]}
+    { id:'pms', code:'C2', icon:'pms', en:'PMS — Property / Hotel Management', th:'ระบบบริหารโรงแรม', fields:[
+        {id:'brand', t:'text', lab:'Existing / preferred brand', sub:'ยี่ห้อ PMS เดิม / ที่ต้องการ'},
+        {id:'complete', t:'select', lab:'Complete system?', sub:'ต้องการระบบครบชุด?', opts:[opt('Yes — complete','ต้องการครบชุด'),opt('No — existing','ไม่ / มีอยู่แล้ว')]}
     ]}
   ]},
 
-  { id:'hotel', code:'HTL', th:'โซลูชันโรงแรม', en:'Hotel Solutions', systems:[
-    { id:'iptv', code:'D1', icon:'iptv', th:'IPTV / ทีวีในห้องพัก', en:'IPTV', fields:[
-        {id:'tv', t:'text', lab:'ยี่ห้อ / รุ่น TV', sub:'TV brand & model'},
-        {id:'os', t:'text', lab:'ระบบปฏิบัติการ TV', sub:'TV OS'},
-        {id:'feat', t:'multi', lab:'ฟังก์ชัน', sub:'Features', opts:[opt('จองบริการโรงแรม','Booking'),opt('สั่ง Room Service','Room service')]},
-        {id:'qty', t:'number', lab:'จำนวนห้อง / เครื่อง', sub:'Quantity'}
+  { id:'hotel', code:'HTL', en:'Hotel Solutions', th:'โซลูชันโรงแรม', systems:[
+    { id:'iptv', code:'D1', icon:'iptv', en:'IPTV / In-room TV', th:'IPTV / ทีวีในห้องพัก', fields:[
+        {id:'tv', t:'text', lab:'TV brand & model', sub:'ยี่ห้อ / รุ่น TV'},
+        {id:'os', t:'text', lab:'TV operating system', sub:'ระบบปฏิบัติการ TV'},
+        {id:'feat', t:'multi', lab:'Features', sub:'ฟังก์ชัน', opts:[opt('Booking service','จองบริการโรงแรม'),opt('Room service','สั่ง Room Service')]},
+        {id:'qty', t:'number', lab:'No. of rooms / units', sub:'จำนวนห้อง / เครื่อง'}
     ]},
-    { id:'checkin', code:'D2', icon:'checkin', th:'Smart Check-in', en:'Self Check-in', fields:[
-        {id:'station', t:'multi', lab:'รูปแบบตู้เช็คอิน', sub:'Station type', opts:[opt('ตั้งพื้น','Ground'),opt('ตั้งโต๊ะ','Desktop')]},
-        {id:'qty', t:'number', lab:'จำนวน', sub:'Quantity'}
+    { id:'checkin', code:'D2', icon:'checkin', en:'Smart Check-in', th:'เช็คอินอัจฉริยะ', fields:[
+        {id:'station', t:'multi', lab:'Station type', sub:'รูปแบบตู้เช็คอิน', opts:[opt('Ground-mounted','ตั้งพื้น'),opt('Desktop','ตั้งโต๊ะ')]},
+        {id:'qty', t:'number', lab:'Quantity', sub:'จำนวน'}
     ]},
-    { id:'ai', code:'D3', icon:'ai', th:'AI Video Analytics', en:'AI Video', fields:[
-        {id:'cam', t:'text', lab:'รุ่นกล้อง / ความละเอียด', sub:'Camera/res'},
-        {id:'an', t:'multi', lab:'การวิเคราะห์', sub:'Analytics', opts:[opt('นับ/ตรวจจับลูกค้า','Customer flow'),opt('ติดตาม VIP','VIP'),opt('ตรวจจับควัน','Smoke'),opt('ตรวจจับการล้ม','Fall'),opt('การใช้สิ่งอำนวยฯ','Facility'),opt('ติดตามพนักงาน','Staff'),opt('ตรวจกระเป๋าสูญหาย','Baggage')]},
-        {id:'qty', t:'number', lab:'จำนวนกล้อง', sub:'No. of cameras'}
+    { id:'ai', code:'D3', icon:'ai', en:'AI Video Analytics', th:'วิเคราะห์ภาพด้วย AI', fields:[
+        {id:'cam', t:'text', lab:'Camera model / resolution', sub:'รุ่นกล้อง / ความละเอียด'},
+        {id:'an', t:'multi', lab:'Analytics', sub:'การวิเคราะห์', opts:[opt('Customer flow','นับ/ตรวจจับลูกค้า'),opt('VIP tracking','ติดตาม VIP'),opt('Smoke detection','ตรวจจับควัน'),opt('Fall detection','ตรวจจับการล้ม'),opt('Facility usage','การใช้สิ่งอำนวยฯ'),opt('Staff tracking','ติดตามพนักงาน'),opt('Baggage lost','ตรวจกระเป๋าสูญหาย')]},
+        {id:'qty', t:'number', lab:'No. of cameras', sub:'จำนวนกล้อง'}
     ]},
-    { id:'robot', code:'D4', icon:'robot', th:'หุ่นยนต์ส่งของ', en:'Delivery Robot', fields:[
-        {id:'qty', t:'number', lab:'จำนวนหุ่นยนต์', sub:'No. of robots'},
-        {id:'elev', t:'select', lab:'เชื่อมต่อลิฟต์', sub:'Elevator linkage', opts:[opt('ต้องการ','Need'),opt('ไม่ต้องการ','Skip')]},
-        {id:'phone', t:'select', lab:'เชื่อมระบบโทรศัพท์', sub:'Phone linkage', opts:[opt('ต้องการ','Need'),opt('ไม่ต้องการ','Skip')]},
-        {id:'note', t:'text', lab:'ขนาดลิฟต์ / มาตรฐานการสื่อสาร', sub:'Elevator/comms note'}
+    { id:'robot', code:'D4', icon:'robot', en:'Delivery Robot', th:'หุ่นยนต์ส่งของ', fields:[
+        {id:'qty', t:'number', lab:'No. of robots', sub:'จำนวนหุ่นยนต์'},
+        {id:'elev', t:'select', lab:'Elevator linkage', sub:'เชื่อมต่อลิฟต์', opts:[opt('Need','ต้องการ'),opt('Skip','ไม่ต้องการ')]},
+        {id:'phone', t:'select', lab:'Phone linkage', sub:'เชื่อมระบบโทรศัพท์', opts:[opt('Need','ต้องการ'),opt('Skip','ไม่ต้องการ')]},
+        {id:'note', t:'text', lab:'Elevator size / comms standard', sub:'ขนาดลิฟต์ / มาตรฐานการสื่อสาร'}
     ]}
   ]}
 ];
 
-/* รายการ "ระบบที่มีอยู่เดิม / ยี่ห้อที่ต้องการ" (จากตาราง Smart Hotel) */
 const EXISTING = [
-  {id:'pms', th:'ระบบบริหารโรงแรม (PMS)', en:'Hotel Mgmt (PMS)'},
-  {id:'bms', th:'ระบบบริหารอาคาร (BMS)', en:'Building Mgmt (BMS)'},
-  {id:'hvac', th:'ระบบปรับอากาศ (HVAC)', en:'Air Conditioning'},
-  {id:'elev', th:'ระบบลิฟต์', en:'Elevator'},
-  {id:'iptv', th:'ระบบ IPTV', en:'IPTV'},
-  {id:'rac', th:'ระบบคีย์การ์ดห้องพัก', en:'Room Access Control'},
-  {id:'tel', th:'ระบบโทรศัพท์', en:'Telephone'}
+  {id:'pms', en:'Hotel Mgmt (PMS)', th:'ระบบบริหารโรงแรม'},
+  {id:'bms', en:'Building Mgmt (BMS)', th:'ระบบบริหารอาคาร'},
+  {id:'hvac', en:'Air Conditioning (HVAC)', th:'ระบบปรับอากาศ'},
+  {id:'elev', en:'Elevator', th:'ระบบลิฟต์'},
+  {id:'iptv', en:'IPTV', th:'ระบบ IPTV'},
+  {id:'rac', en:'Room Access Control', th:'คีย์การ์ดห้องพัก'},
+  {id:'tel', en:'Telephone', th:'ระบบโทรศัพท์'}
 ];
 
-/* เอกสารที่ต้องการจากลูกค้า */
 const DOCS = [
-  opt('Floor plan ของโครงการ','Project floor plan'),
-  opt('แบบแปลนไฟฟ้า (แสงสว่าง/สวิตช์/ปลั๊ก)','Electrical drawing'),
-  opt('แบบระบบ HVAC','HVAC drawing'),
-  opt('แบบ Network / Fire alarm','Network/Fire alarm'),
-  opt('แบบเดินท่อร้อยสายไฟ','Conduit drawing'),
-  opt('ตำแหน่งตู้ Server / Network','Server rack location')
+  opt('Project floor plan','Floor plan ของโครงการ'),
+  opt('Electrical drawing','แบบแปลนไฟฟ้า (แสง/สวิตช์/ปลั๊ก)'),
+  opt('HVAC drawing','แบบระบบ HVAC'),
+  opt('Network / fire alarm','แบบ Network / Fire alarm'),
+  opt('Conduit drawing','แบบเดินท่อร้อยสายไฟ'),
+  opt('Server rack location','ตำแหน่งตู้ Server / Network')
 ];
 
 /* =========================================================================
    STATE
    ========================================================================= */
-const state = {
-  step: 0,
-  selected: new Set(),     // system ids selected on the catalog step
-  a: {}                    // answers, flat keys
-};
+const state = { step:0, selected:new Set(), a:{} };
 const get = k => state.a[k];
 const set = (k,v) => { if(v===''||v==null){delete state.a[k];} else {state.a[k]=v;} };
 const toggleMulti = (k,val) => {
@@ -416,20 +440,20 @@ const toggleMulti = (k,val) => {
 };
 
 /* =========================================================================
-   STEP DEFINITIONS (dynamic)
+   STEPS (dynamic)
    ========================================================================= */
 function steps(){
   const list = [
-    {id:'project', code:'00 · INFO', title:'ข้อมูลโครงการ & ผู้ติดต่อ', sub:'Project & contact information', render:renderProject, validate:validateProject},
-    {id:'catalog', code:'01 · SCOPE', title:'เลือกระบบที่สนใจ', sub:'เลือกระบบที่ต้องการให้ทีม Solution ออกแบบ', render:renderCatalog, validate:()=> state.selected.size>0 || 'กรุณาเลือกอย่างน้อย 1 ระบบ'},
-    {id:'existing', code:'02 · EXISTING', title:'ระบบเดิม & ยี่ห้อที่ต้องการ', sub:'ระบุยี่ห้อที่มีอยู่หรือที่ต้องการ (กรอกเฉพาะที่เกี่ยวข้อง)', render:renderExisting}
+    {id:'project', code:'00 · INFO', title:'Project & Contact Information', sub:'ข้อมูลโครงการและผู้ติดต่อ', render:renderProject, validate:validateProject},
+    {id:'catalog', code:'01 · SCOPE', title:'Select Systems', sub:'เลือกระบบที่ต้องการให้ทีม Solution ออกแบบ', render:renderCatalog, validate:()=> state.selected.size>0 || 'Please select at least one system / กรุณาเลือกอย่างน้อย 1 ระบบ'},
+    {id:'existing', code:'02 · EXISTING', title:'Existing Systems & Preferred Brands', sub:'ระบุยี่ห้อที่มีอยู่หรือที่ต้องการ — กรอกเฉพาะที่เกี่ยวข้อง', render:renderExisting}
   ];
   GROUPS.forEach(g=>{
     const sel = g.systems.filter(s=>state.selected.has(s.id));
-    if(sel.length) list.push({id:'g_'+g.id, code:g.code+' · DETAIL', title:'รายละเอียด: '+g.th, sub:g.en+' — ระบุรายละเอียดของแต่ละระบบ', render:()=>renderGroupDetail(g), group:g});
+    if(sel.length) list.push({id:'g_'+g.id, code:g.code+' · DETAIL', title:'Details · '+g.en, sub:g.th+' — specify details for each system', render:()=>renderGroupDetail(g), group:g});
   });
-  list.push({id:'docs', code:'08 · DOCS', title:'เอกสาร & ข้อมูลเพิ่มเติม', sub:'เอกสารที่สามารถจัดส่งให้ทีมออกแบบ', render:renderDocs});
-  list.push({id:'review', code:'09 · REVIEW', title:'ตรวจสอบ & ส่งข้อมูล', sub:'ตรวจความถูกต้องก่อนส่งให้ทีม Solution', render:renderReview});
+  list.push({id:'docs', code:'08 · DOCS', title:'Documents & Additional Info', sub:'เอกสารและข้อมูลเพิ่มเติม', render:renderDocs});
+  list.push({id:'review', code:'09 · REVIEW', title:'Review & Submit', sub:'ตรวจสอบความถูกต้องก่อนส่งให้ทีม Solution', render:renderReview});
   return list;
 }
 let STEPS = steps();
@@ -440,19 +464,20 @@ let STEPS = steps();
 function field(f, keyPrefix){
   const k = keyPrefix? keyPrefix+'.'+f.id : f.id;
   const lab = `<label><span class="lab">${f.lab}${f.req?'<span class="req">*</span>':''}</span> <span class="sub">${f.sub||''}</span></label>`;
-  if(f.t==='text'||f.t==='tel'||f.t==='email'||f.t==='number'){
+  if(['text','tel','email','number'].includes(f.t)){
     const v = get(k)||'';
-    return `<div class="field">${lab}<input type="${f.t==='number'?'number':f.t}" data-k="${k}" value="${esc(v)}" placeholder="${f.ph||''}" ${f.t==='number'?'min="0"':''}></div>`;
+    const im = f.t==='number'?'numeric':(f.t==='tel'?'tel':(f.t==='email'?'email':'text'));
+    return `<div class="field">${lab}<input type="${f.t}" inputmode="${im}" autocomplete="${f.ac||'off'}" data-k="${k}" value="${esc(v)}" placeholder="${f.ph||''}" ${f.t==='number'?'min="0"':''}></div>`;
   }
   if(f.t==='textarea'){
     return `<div class="field">${lab}<textarea data-k="${k}" placeholder="${f.ph||''}">${esc(get(k)||'')}</textarea></div>`;
   }
   if(f.t==='select'||f.t==='multi'){
     const cur = get(k);
-    const isOn = (o)=> f.t==='multi' ? (Array.isArray(cur)&&cur.includes(o.th)) : cur===o.th;
+    const isOn = (o)=> f.t==='multi' ? (Array.isArray(cur)&&cur.includes(o.en)) : cur===o.en;
     const chips = f.opts.map(o=>`
-      <div class="chip ${isOn(o)?'on':''}" data-kind="${f.t}" data-k="${k}" data-v="${esc(o.th)}">
-        <span class="tick">${isOn(o)?'✓':''}</span>${o.th}<span class="en">${o.en}</span>
+      <div class="chip ${isOn(o)?'on':''}" data-kind="${f.t}" data-k="${k}" data-v="${esc(o.en)}">
+        <span class="tick">${isOn(o)?'✓':''}</span>${o.en}<span class="en">${o.th}</span>
       </div>`).join('');
     return `<div class="field">${lab}<div class="chips">${chips}</div></div>`;
   }
@@ -460,38 +485,36 @@ function field(f, keyPrefix){
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
-/* ---- STEP RENDERERS ---- */
 function renderProject(){
-  const fProp = get('propertyType');
-  const showStar = fProp==='โรงแรม';
+  const showStar = get('propertyType')==='Hotel';
   return `
   <div class="grid g2">
-    ${field({id:'company',t:'text',lab:'ชื่อบริษัท / องค์กร',sub:'Company',req:true})}
-    ${field({id:'contact',t:'text',lab:'ชื่อผู้ติดต่อ',sub:'Contact name',req:true})}
-    ${field({id:'phone',t:'tel',lab:'เบอร์โทรศัพท์',sub:'Phone',req:true})}
-    ${field({id:'email',t:'email',lab:'อีเมล',sub:'Email'})}
-    ${field({id:'project',t:'text',lab:'ชื่อโครงการ',sub:'Project name'})}
-    ${field({id:'location',t:'text',lab:'ที่ตั้งโครงการ',sub:'Location'})}
+    ${field({id:'company',t:'text',lab:'Company / organisation',sub:'ชื่อบริษัท',req:true,ac:'organization'})}
+    ${field({id:'contact',t:'text',lab:'Contact person',sub:'ชื่อผู้ติดต่อ',req:true,ac:'name'})}
+    ${field({id:'phone',t:'tel',lab:'Phone',sub:'เบอร์โทรศัพท์',req:true,ac:'tel'})}
+    ${field({id:'email',t:'email',lab:'Email',sub:'อีเมล',ac:'email'})}
+    ${field({id:'project',t:'text',lab:'Project name',sub:'ชื่อโครงการ'})}
+    ${field({id:'location',t:'text',lab:'Project location',sub:'ที่ตั้งโครงการ'})}
   </div>
   <div style="height:16px"></div>
   <div class="grid g2">
-    ${field({id:'propertyType',t:'select',lab:'ประเภทอาคาร',sub:'Property type',opts:[opt('โรงแรม','Hotel'),opt('คอนโด','Condo'),opt('ที่พักอาศัย','Residence'),opt('อื่นๆ','Other')]})}
-    ${field({id:'status',t:'select',lab:'สถานะอาคาร',sub:'Status',opts:[opt('สร้างใหม่','New build'),opt('ปรับปรุง','Renovated')]})}
+    ${field({id:'propertyType',t:'select',lab:'Property type',sub:'ประเภทอาคาร',opts:[opt('Hotel','โรงแรม'),opt('Condo','คอนโด'),opt('Residence','ที่พักอาศัย'),opt('Other','อื่นๆ')]})}
+    ${field({id:'status',t:'select',lab:'Building status',sub:'สถานะอาคาร',opts:[opt('New build','สร้างใหม่'),opt('Renovated','ปรับปรุง')]})}
   </div>
   <div style="height:16px"></div>
-  ${showStar? `<div class="grid">${field({id:'star',t:'select',lab:'ระดับโรงแรม',sub:'Star rating',opts:[opt('6 ดาว','6★'),opt('5 ดาว','5★'),opt('4 ดาว','4★'),opt('3 ดาวหรือต่ำกว่า','≤3★')]})}</div><div style="height:16px"></div>`:''}
+  ${showStar? `<div class="grid">${field({id:'star',t:'select',lab:'Star rating',sub:'ระดับโรงแรม',opts:[opt('6 stars','6 ดาว'),opt('5 stars','5 ดาว'),opt('4 stars','4 ดาว'),opt('≤3 stars','3 ดาวหรือต่ำกว่า')]})}</div><div style="height:16px"></div>`:''}
   <div class="grid g3">
-    ${field({id:'floors',t:'number',lab:'จำนวนชั้น',sub:'Floors'})}
-    ${field({id:'rooms',t:'number',lab:'จำนวนห้อง',sub:'Rooms / units'})}
-    ${field({id:'timeline',t:'text',lab:'ระยะเวลาโครงการ',sub:'Timeline'})}
+    ${field({id:'floors',t:'number',lab:'Floors',sub:'จำนวนชั้น'})}
+    ${field({id:'rooms',t:'number',lab:'Rooms / units',sub:'จำนวนห้อง'})}
+    ${field({id:'timeline',t:'text',lab:'Project timeline',sub:'ระยะเวลาโครงการ'})}
   </div>`;
 }
 function validateProject(){
-  const need = [['company','ชื่อบริษัท'],['contact','ชื่อผู้ติดต่อ'],['phone','เบอร์โทรศัพท์']];
+  const need = [['company','Company'],['contact','Contact person'],['phone','Phone']];
   const missing = need.filter(([k])=>!(get(k)||'').trim());
   if(missing.length){
     missing.forEach(([k])=>{const el=document.querySelector(`[data-k="${k}"]`);if(el)el.classList.add('err');});
-    return 'กรุณากรอก: '+missing.map(m=>m[1]).join(', ');
+    return 'Please complete required fields / กรุณากรอกข้อมูลที่จำเป็น: '+missing.map(m=>m[1]).join(', ');
   }
   return true;
 }
@@ -499,16 +522,13 @@ function validateProject(){
 function renderCatalog(){
   return GROUPS.map(g=>`
     <div class="groupblk">
-      <div class="group-h"><span class="code">${g.code}</span><span class="nm">${g.th}<small>${g.en}</small></span></div>
+      <div class="group-h"><span class="code">${g.code}</span><span class="nm">${g.en}<small>${g.th}</small></span></div>
       <div class="syscards">
         ${g.systems.map(s=>{
           const on = state.selected.has(s.id);
           return `<div class="syscard ${on?'on':''}" data-sys="${s.id}">
-            <div class="top">
-              <div class="ico">${svg(I[s.icon])}</div>
-              <div class="box">${on?'✓':''}</div>
-            </div>
-            <div class="nm">${s.th}<small>${s.code} · ${s.en}</small></div>
+            <div class="top"><div class="ico">${svg(I[s.icon])}</div><div class="box">${on?'✓':''}</div></div>
+            <div class="nm">${s.en}<small>${s.code} · ${s.th}</small></div>
           </div>`;
         }).join('')}
       </div>
@@ -520,17 +540,17 @@ function renderExisting(){
     const bv = get('exist.'+e.id+'.brand')||'';
     const need = get('exist.'+e.id+'.complete');
     return `<div class="mrow">
-      <div class="mcell"><div class="nm">${e.th}<br><span class="sub" style="font-family:var(--mono);font-size:10px;color:var(--muted)">${e.en}</span></div></div>
-      <div class="mcell"><input type="text" data-k="exist.${e.id}.brand" value="${esc(bv)}" placeholder="ยี่ห้อเดิม / ที่ต้องการ"></div>
+      <div class="mcell"><div class="nm">${e.en}<span class="th">${e.th}</span></div></div>
+      <div class="mcell"><input type="text" autocomplete="off" data-k="exist.${e.id}.brand" value="${esc(bv)}" placeholder="Existing / preferred brand"></div>
       <div class="mcell"><div class="mini-chips">
-        <div class="mini ${need==='ครบชุด'?'on':''}" data-kind="select" data-k="exist.${e.id}.complete" data-v="ครบชุด">ต้องการครบชุด</div>
-        <div class="mini no ${need==='ไม่'?'on':''}" data-kind="select" data-k="exist.${e.id}.complete" data-v="ไม่">มีอยู่แล้ว</div>
+        <div class="mini ${need==='Complete'?'on':''}" data-kind="select" data-k="exist.${e.id}.complete" data-v="Complete">Complete system</div>
+        <div class="mini blue ${need==='Integrate'?'on':''}" data-kind="select" data-k="exist.${e.id}.complete" data-v="Integrate">Integrate existing</div>
       </div></div>
     </div>`;
   }).join('');
-  return `<div class="banner warn">ℹ️ <span>กรอกเฉพาะระบบที่เกี่ยวข้อง — เว้นว่างได้หากยังไม่มีข้อมูล</span></div>
+  return `<div class="banner warn">ℹ️ <span>Fill in only the relevant systems — leave blank if not yet known / กรอกเฉพาะที่เกี่ยวข้อง เว้นว่างได้</span></div>
     <div class="matrix">
-      <div class="mrow head"><div class="mcell">ระบบ / SYSTEM</div><div class="mcell">ยี่ห้อ (เดิม/ที่ต้องการ)</div><div class="mcell">ความต้องการ</div></div>
+      <div class="mrow head"><div class="mcell">System</div><div class="mcell">Brand (existing / preferred)</div><div class="mcell">Requirement</div></div>
       ${rows}
     </div>`;
 }
@@ -539,7 +559,7 @@ function renderGroupDetail(g){
   const sel = g.systems.filter(s=>state.selected.has(s.id));
   return sel.map(s=>`
     <div class="detail">
-      <div class="detail-h"><div class="ico">${svg(I[s.icon])}</div><div class="t">${s.th}</div><div class="c">${s.code}</div></div>
+      <div class="detail-h"><div class="ico">${svg(I[s.icon])}</div><div class="t">${s.en}</div><div class="c">${s.code}</div></div>
       <div class="detail-body"><div class="grid g2">
         ${s.fields.map(f=>field(f,s.id)).join('')}
       </div></div>
@@ -549,58 +569,60 @@ function renderGroupDetail(g){
 function renderDocs(){
   const can = get('docs.provide')||[];
   const chips = DOCS.map(o=>{
-    const on = can.includes(o.th);
-    return `<div class="chip ${on?'on':''}" data-kind="multi" data-k="docs.provide" data-v="${esc(o.th)}"><span class="tick">${on?'✓':''}</span>${o.th}<span class="en">${o.en}</span></div>`;
+    const on = can.includes(o.en);
+    return `<div class="chip ${on?'on':''}" data-kind="multi" data-k="docs.provide" data-v="${esc(o.en)}"><span class="tick">${on?'✓':''}</span>${o.en}<span class="en">${o.th}</span></div>`;
   }).join('');
   return `
-    <div class="field"><label><span class="lab">เอกสารที่สามารถจัดส่งได้</span> <span class="sub">Documents available · ขอเป็นไฟล์ CAD หรือ PDF</span></label><div class="chips">${chips}</div></div>
+    <div class="field"><label><span class="lab">Documents you can provide</span> <span class="sub">เอกสารที่สามารถจัดส่งได้ — CAD or PDF preferred</span></label><div class="chips">${chips}</div></div>
     <div style="height:18px"></div>
     <div class="grid g2">
-      ${field({id:'docs.format',t:'select',lab:'รูปแบบไฟล์',sub:'File format',opts:[opt('CAD','CAD'),opt('PDF','PDF'),opt('ทั้ง CAD และ PDF','Both'),opt('ยังไม่มี','Not yet')]})}
-      ${field({id:'docs.budget',t:'text',lab:'งบประมาณโดยประมาณ (ถ้ามี)',sub:'Est. budget (optional)'})}
+      ${field({id:'docs.format',t:'select',lab:'File format',sub:'รูปแบบไฟล์',opts:[opt('CAD','CAD'),opt('PDF','PDF'),opt('Both CAD & PDF','ทั้ง CAD และ PDF'),opt('Not yet available','ยังไม่มี')]})}
+      ${field({id:'docs.budget',t:'text',lab:'Estimated budget (optional)',sub:'งบประมาณโดยประมาณ'})}
     </div>
     <div style="height:18px"></div>
-    ${field({id:'docs.note',t:'textarea',lab:'Requirement เพิ่มเติม',sub:'Additional requirements / notes',ph:'ระบุความต้องการเพิ่มเติมที่ไม่ได้อยู่ในรายการข้างต้น...'})}`;
+    ${field({id:'fileLink',t:'text',lab:'File link (Google Drive / WeTransfer / etc.)',sub:'ลิงก์สำหรับส่งไฟล์เอกสาร',ph:'https://drive.google.com/...'})}
+    <div style="height:18px"></div>
+    ${field({id:'docs.note',t:'textarea',lab:'Additional requirements',sub:'Requirement เพิ่มเติม',ph:'Anything not covered above… / ระบุความต้องการเพิ่มเติม…'})}`;
 }
 
 function renderReview(){
   const v = (k)=>{const x=get(k);return x==null||x===''?null:(Array.isArray(x)?x.join(', '):x);};
-  const row = (k,key)=>`<div class="rrow"><div class="k">${k}</div><div class="v ${v(key)?'':'empty'}">${v(key)||'— ยังไม่ระบุ —'}</div></div>`;
+  const row = (label,key)=>`<div class="rrow"><div class="k">${label}</div><div class="v ${v(key)?'':'empty'}">${v(key)||'— not specified —'}</div></div>`;
   const selSys = [];
   GROUPS.forEach(g=>g.systems.forEach(s=>{ if(state.selected.has(s.id)) selSys.push(s); }));
 
   let html = `<div class="ticket">
-    <div class="lab">WORK ORDER · ใบสรุปความต้องการ</div>
+    <div class="lab">WORK ORDER · REQUIREMENTS SUMMARY</div>
     <div class="big">${esc(get('company')||'—')} ${get('project')?'· '+esc(get('project')):''}</div>
-    <div class="meta">${esc(get('contact')||'')} · ${esc(get('phone')||'')} · ${selSys.length} ระบบ · ${new Date().toLocaleDateString('th-TH')}</div>
+    <div class="meta">${esc(get('contact')||'')} · ${esc(get('phone')||'')} · ${selSys.length} systems · ${new Date().toLocaleDateString('en-GB')}</div>
   </div>`;
 
-  html += `<div class="review-grp"><h3>ข้อมูลโครงการ</h3>
-    ${row('บริษัท','company')}${row('ผู้ติดต่อ','contact')}${row('โทรศัพท์','phone')}${row('อีเมล','email')}
-    ${row('ประเภทอาคาร','propertyType')}${row('สถานะ','status')}${row('จำนวนชั้น/ห้อง', null)}
-    <div class="rrow"><div class="k">จำนวนชั้น / ห้อง</div><div class="v">${(v('floors')||'-')} ชั้น · ${(v('rooms')||'-')} ห้อง</div></div>
-    ${row('ที่ตั้ง','location')}${row('ระยะเวลา','timeline')}
+  html += `<div class="review-grp"><h3>Project Information</h3>
+    ${row('Company','company')}${row('Contact','contact')}${row('Phone','phone')}${row('Email','email')}
+    ${row('Property type','propertyType')}${row('Status','status')}
+    <div class="rrow"><div class="k">Floors / Rooms</div><div class="v">${(v('floors')||'-')} floors · ${(v('rooms')||'-')} rooms</div></div>
+    ${row('Location','location')}${row('Timeline','timeline')}
   </div>`;
 
-  html += `<div class="review-grp"><h3>ระบบที่เลือก (${selSys.length})</h3>`;
-  if(!selSys.length){ html+=`<div class="rrow"><div class="v empty">ยังไม่ได้เลือกระบบ</div></div>`; }
+  html += `<div class="review-grp"><h3>Selected Systems (${selSys.length})</h3>`;
+  if(!selSys.length){ html+=`<div class="rrow"><div class="v empty">No systems selected</div></div>`; }
   selSys.forEach(s=>{
     const parts = s.fields.map(f=>{const val=v(s.id+'.'+f.id);return val?`<b>${f.lab}:</b> ${esc(val)}`:null;}).filter(Boolean);
-    html += `<div class="rrow"><div class="k">${s.th} <span style="font-family:var(--mono);font-size:10px;color:var(--muted)">${s.code}</span></div>
-      <div class="v" style="font-weight:500">${parts.length?parts.join(' · '):'<span style="color:var(--muted);font-style:italic">เลือกแล้ว (ไม่มีรายละเอียดเพิ่ม)</span>'}</div></div>`;
+    html += `<div class="rrow"><div class="k">${s.en} <span style="font-family:var(--mono);font-size:10px;color:var(--muted)">${s.code}</span></div>
+      <div class="v" style="font-weight:500">${parts.length?parts.join(' · '):'<span style="color:var(--muted);font-style:italic">selected (no extra detail)</span>'}</div></div>`;
   });
   html += `</div>`;
 
   const docs = v('docs.provide');
-  html += `<div class="review-grp"><h3>เอกสาร & เพิ่มเติม</h3>
-    <div class="rrow"><div class="k">เอกสารที่จัดส่งได้</div><div class="v ${docs?'':'empty'}">${docs||'— ยังไม่ระบุ —'}</div></div>
-    ${row('รูปแบบไฟล์','docs.format')}${row('Requirement เพิ่มเติม','docs.note')}
+  html += `<div class="review-grp"><h3>Documents & Notes</h3>
+    <div class="rrow"><div class="k">Documents available</div><div class="v ${docs?'':'empty'}">${docs||'— not specified —'}</div></div>
+    ${row('File format','docs.format')}${row('File link','fileLink')}${row('Additional requirements','docs.note')}
   </div>`;
 
   if(!CONFIG.webAppUrl){
-    html += `<div class="banner warn">⚠️ <span><b>ยังไม่ได้เชื่อมต่อ Google Sheet</b> — เมื่อกด “ส่งข้อมูล” ระบบจะให้ดาวน์โหลดไฟล์สรุปแทน หากต้องการบันทึกลงชีตอัตโนมัติ ให้ใส่ลิงก์ใน <code>CONFIG.webAppUrl</code> (ดูไฟล์ Code.gs / คู่มือ)</span></div>`;
+    html += `<div class="banner warn">⚠️ <span><b>Google Sheet not connected.</b> On submit, a summary file will download instead. To save automatically, set <code>CONFIG.webAppUrl</code> (see Code.gs / SETUP). / ยังไม่ได้เชื่อมต่อชีต</span></div>`;
   } else {
-    html += `<div class="banner ok">✓ <span>เชื่อมต่อปลายทางแล้ว — กด “ส่งข้อมูล” เพื่อบันทึกลง Google Sheet</span></div>`;
+    html += `<div class="banner ok">✓ <span>Endpoint connected — press “Submit” to save to Google Sheet / เชื่อมต่อแล้ว</span></div>`;
   }
   return html;
 }
@@ -609,21 +631,21 @@ function renderReview(){
    CORE RENDER + NAV
    ========================================================================= */
 const $ = s => document.querySelector(s);
-function paint(){
+function paint(scrollTop){
   STEPS = steps();
   if(state.step>=STEPS.length) state.step = STEPS.length-1;
   const st = STEPS[state.step];
 
-  // rail
   $('#rail').innerHTML = STEPS.map((s,i)=>`
     <li class="step ${i===state.step?'active':''} ${i<state.step?'done':''}" data-go="${i}">
       <span class="dot">${i<state.step?'✓':i+1}</span>
-      <span class="lbl"><span class="t">${s.title.replace(/^รายละเอียด: /,'')}</span><span class="s">${s.code}</span></span>
+      <span class="lbl"><span class="t">${s.title.replace(/^Details · /,'')}</span><span class="s">${s.code}</span></span>
     </li>`).join('');
-  const pct = Math.round((state.step)/(STEPS.length-1)*100);
-  $('#fill').style.width = pct+'%'; $('#pct').textContent = pct+'% · ขั้นที่ '+(state.step+1)+'/'+STEPS.length;
+  $('#railNow').innerHTML = `<div class="ns">${st.code}</div><div class="nt">${st.title}</div>`;
 
-  // head + body
+  const pct = Math.round((state.step)/(STEPS.length-1)*100);
+  $('#fill').style.width = pct+'%'; $('#pct').textContent = pct+'% · Step '+(state.step+1)+'/'+STEPS.length;
+
   $('#eyebrow').textContent = st.code;
   $('#title').textContent = st.title;
   $('#subtitle').textContent = st.sub;
@@ -631,17 +653,16 @@ function paint(){
   stage.classList.remove('stage-anim'); void stage.offsetWidth; stage.classList.add('stage-anim');
   stage.innerHTML = st.render();
 
-  // nav buttons
   const isLast = state.step===STEPS.length-1;
   $('#backBtn').style.visibility = state.step===0?'hidden':'visible';
   const nb = $('#nextBtn');
-  if(isLast){ nb.innerHTML = (CONFIG.webAppUrl?'ส่งข้อมูล ➤':'สร้างไฟล์สรุป ➤'); nb.classList.add('ok'); nb.classList.remove('primary'); }
-  else { nb.innerHTML = 'ถัดไป →'; nb.classList.add('primary'); nb.classList.remove('ok'); }
-  $('#footnote').textContent = st.id==='catalog'? (state.selected.size+' ระบบที่เลือก') : '';
-  window.scrollTo({top:0,behavior:'smooth'});
+  if(isLast){ nb.innerHTML = (CONFIG.webAppUrl?'Submit ➤':'Generate summary ➤'); nb.classList.add('ok'); nb.classList.remove('primary'); }
+  else { nb.innerHTML = 'Next →'; nb.classList.add('primary'); nb.classList.remove('ok'); }
+  $('#footnote').textContent = st.id==='catalog'? (state.selected.size+' systems selected') : '';
+  if(scrollTop) window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function go(i){ if(i<0||i>=STEPS.length) return; state.step=i; paint(); }
+function go(i){ if(i<0||i>=STEPS.length) return; state.step=i; paint(true); }
 function next(){
   const st = STEPS[state.step];
   if(st.validate){ const r=st.validate(); if(r!==true){ banner(r); return; } }
@@ -654,16 +675,16 @@ function banner(msg){
   $('#stage').prepend(b); b.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-/* event delegation */
 document.addEventListener('click', e=>{
   const sys = e.target.closest('[data-sys]');
-  if(sys){ const id=sys.dataset.sys; state.selected.has(id)?state.selected.delete(id):state.selected.add(id); paint(); return; }
+  if(sys){ const y=window.scrollY; const id=sys.dataset.sys; state.selected.has(id)?state.selected.delete(id):state.selected.add(id); paint(false); window.scrollTo(0,y); return; }
   const chip = e.target.closest('[data-kind]');
   if(chip){
+    const y=window.scrollY;
     const {kind,k,v}=chip.dataset;
     if(kind==='multi') toggleMulti(k,v);
     else { set(k, get(k)===v?'':v); }
-    paint(); return;
+    paint(false); window.scrollTo(0,y); return;
   }
   const goEl = e.target.closest('[data-go]');
   if(goEl){ go(+goEl.dataset.go); return; }
@@ -688,9 +709,8 @@ function buildPayload(){
     floors:get('floors')||'', rooms:get('rooms')||'', timeline:get('timeline')||'',
     selectedSystems: selSys.join(' | '),
     docFormat:get('docs.format')||'', docsAvailable:(get('docs.provide')||[]).join(', '),
-    additionalNote:get('docs.note')||'', budget:get('docs.budget')||''
+    fileLink:get('fileLink')||'', additionalNote:get('docs.note')||'', budget:get('docs.budget')||''
   };
-  // flatten all detail answers + existing matrix
   Object.keys(state.a).forEach(k=>{
     if(k.includes('.')){ const v=state.a[k]; flat[k]=Array.isArray(v)?v.join('; '):v; }
   });
@@ -699,8 +719,7 @@ function buildPayload(){
 
 async function submit(){
   const payload = buildPayload();
-  const nb=$('#nextBtn'); nb.disabled=true; nb.textContent='กำลังส่ง...';
-
+  const nb=$('#nextBtn'); nb.disabled=true; nb.textContent='Sending…';
   if(CONFIG.webAppUrl){
     try{
       await fetch(CONFIG.webAppUrl,{
@@ -720,7 +739,7 @@ function download(payload){
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob); const a=document.createElement('a');
   a.href=url; a.download='SYSLINK_'+(payload.company||'requirement').replace(/\s+/g,'_')+'_'+Date.now()+'.json';
-  a.click(); URL.revokeObjectURL(url);
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1500);
 }
 function csvDownload(p){
   const keys=Object.keys(p);
@@ -728,23 +747,24 @@ function csvDownload(p){
   const csv=keys.map(esc2).join(',')+'\n'+keys.map(k=>esc2(p[k])).join(',');
   const blob=new Blob(['\ufeff'+csv],{type:'text/csv'});
   const url=URL.createObjectURL(blob); const a=document.createElement('a');
-  a.href=url; a.download='SYSLINK_'+(p.company||'requirement').replace(/\s+/g,'_')+'.csv'; a.click(); URL.revokeObjectURL(url);
+  a.href=url; a.download='SYSLINK_'+(p.company||'requirement').replace(/\s+/g,'_')+'.csv';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1500);
 }
 
 function done(success, payload, errMsg){
-  const card=$('.card'); const head=$('.card-head'); head.style.display='none'; $('#actions').style.display='none';
+  $('.card-head').style.display='none'; $('#actions').style.display='none';
   let msg, sub, cls;
-  if(success===true){ cls='ok'; msg='ส่งข้อมูลเรียบร้อย'; sub='ข้อมูลความต้องการของคุณถูกส่งให้ทีม Solution ของ SYSLINK แล้ว ทีมงานจะติดต่อกลับเพื่อออกแบบระบบให้เหมาะสมที่สุด'; }
-  else if(success==='local'){ cls='ok'; msg='สร้างไฟล์สรุปแล้ว'; sub='ยังไม่ได้เชื่อมต่อ Google Sheet — ไฟล์สรุปถูกดาวน์โหลดให้แล้ว สามารถส่งให้ทีม SYSLINK ได้โดยตรง หรือเชื่อมต่อชีตเพื่อบันทึกอัตโนมัติ'; }
-  else { cls='err'; msg='ส่งไม่สำเร็จ'; sub='เกิดข้อผิดพลาด: '+(errMsg||'')+' — กรุณาดาวน์โหลดไฟล์สรุปและส่งให้ทีมงานโดยตรง'; }
+  if(success===true){ cls='ok'; msg='Submitted successfully'; sub='Your requirements have been sent to the SYSLINK Solution team. We will get back to you to design the most suitable system. / ส่งข้อมูลให้ทีมงานเรียบร้อยแล้ว'; }
+  else if(success==='local'){ cls='ok'; msg='Summary file created'; sub='Google Sheet is not connected yet — a summary file has been downloaded so you can send it to SYSLINK directly. / ยังไม่ได้เชื่อมต่อชีต ไฟล์สรุปถูกดาวน์โหลดแล้ว'; }
+  else { cls='err'; msg='Submission failed'; sub='Error: '+(errMsg||'')+' — please download the summary and send it to the team directly. / กรุณาดาวน์โหลดไฟล์สรุปและส่งให้ทีมงาน'; }
 
   $('#stage').innerHTML = `<div class="donewrap">
     <div class="circle">${svg(cls==='ok'?'<path d="M20 6 9 17l-5-5"/>':'<path d="M18 6 6 18M6 6l12 12"/>')}</div>
     <h2>${msg}</h2><p>${sub}</p>
     <div class="dl-row">
-      <button class="btn ghost" id="dlJson">⬇ ดาวน์โหลด JSON</button>
-      <button class="btn ghost" id="dlCsv">⬇ ดาวน์โหลด CSV</button>
-      <button class="btn primary" id="again">+ สร้างรายการใหม่</button>
+      <button class="btn ghost" id="dlJson">⬇ Download JSON</button>
+      <button class="btn ghost" id="dlCsv">⬇ Download CSV</button>
+      <button class="btn primary" id="again">+ New entry</button>
     </div>
   </div>`;
   $('#dlJson').onclick=()=>download(payload);
@@ -754,7 +774,6 @@ function done(success, payload, errMsg){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* boot */
 paint();
 </script>
 </body>
